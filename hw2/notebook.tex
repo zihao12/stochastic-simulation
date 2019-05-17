@@ -1,0 +1,806 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{hw2}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{itemize}
+\item
+  Answer to Exercise 3.1, 3.2, part of 4.1 and 4.4 are handwritten and
+  attached in the end.
+\item
+  The code used are included in the end of the notebook.
+\end{itemize}
+
+    \section{Exercise 4.2}\label{exercise-4.2}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{k+kp}{rm}\PY{p}{(}\PY{k+kt}{list} \PY{o}{=} \PY{k+kp}{ls}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{k+kn}{source}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{mcmc\PYZus{}games.R\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{4.2.1}\label{section}
+
+Answer: it uses independence sampler. Not a good choice because the
+acceptance rate is too low.
+
+    \subsection{4.2.2}\label{section}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}44}]:} mc\PYZus{}out \PY{o}{=} mcmc\PYZus{}is\PY{p}{(}iterations \PY{o}{=} \PY{l+m}{100}\PY{p}{,} burn\PYZus{}in \PY{o}{=} \PY{l+m}{0}\PY{p}{,} sd \PY{o}{=} \PY{l+m}{10}\PY{p}{)}
+         mc\PYZus{}vis\PY{p}{(}mc\PYZus{}out\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_5_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    
+    \begin{verbatim}
+
+Iterations = 1:100
+Thinning interval = 1 
+Number of chains = 1 
+Sample size per chain = 100 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+     Mean SD Naive SE Time-series SE
+[1,]    0  0        0              0
+[2,]    0  0        0              0
+[3,]    0  0        0              0
+[4,]    0  0        0              0
+[5,]    0  0        0              0
+[6,]    0  0        0              0
+
+2. Quantiles for each variable:
+
+     2.5% 25% 50% 75% 97.5%
+var1    0   0   0   0     0
+var2    0   0   0   0     0
+var3    0   0   0   0     0
+var4    0   0   0   0     0
+var5    0   0   0   0     0
+var6    0   0   0   0     0
+
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_5_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Answer: it has not reached equilibrium in 100 iterations. In fact, all
+smaples are the same as the initiali state (all zeros). Thus (almost) no
+proposals have been accepted in 100 iterations yet.
+
+    \subsection{4.2.3}\label{section}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}48}]:} burn\PYZus{}in \PY{o}{=} \PY{l+m}{1e+04}
+         iterations \PY{o}{=}  burn\PYZus{}in \PY{o}{+} \PY{l+m}{1e+04}
+         mc\PYZus{}out \PY{o}{=} mcmc\PYZus{}is\PY{p}{(}iterations \PY{o}{=} iterations\PY{p}{,} burn\PYZus{}in \PY{o}{=} burn\PYZus{}in\PY{p}{,} sd \PY{o}{=} \PY{l+m}{1}\PY{p}{)}
+         mc\PYZus{}vis\PY{p}{(}mc\PYZus{}out\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    
+    \begin{verbatim}
+
+Iterations = 10000:20000
+Thinning interval = 1 
+Number of chains = 1 
+Sample size per chain = 10001 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+        Mean     SD Naive SE Time-series SE
+[1,] -2.5230 0.1202 0.001202        0.08238
+[2,]  1.4436 0.3370 0.003370        0.23089
+[3,]  0.1905 0.4546 0.004546        0.31149
+[4,] -1.8977 0.2915 0.002915        0.19974
+[5,]  1.6925 0.4227 0.004227        0.28961
+[6,] -0.8395 0.6804 0.006804        0.46616
+
+2. Quantiles for each variable:
+
+        2.5%     25%     50%     75%   97.5%
+var1 -2.7284 -2.7284 -2.4527 -2.4527 -2.4527
+var2  0.8680  0.8680  1.6409  1.6409  1.6409
+var3 -0.5860 -0.5860  0.4567  0.4567  0.4567
+var4 -2.0684 -2.0684 -2.0684 -1.3998 -1.3998
+var5  0.9706  0.9706  1.9400  1.9400  1.9400
+var6 -2.0016 -2.0016 -0.4412 -0.4412 -0.4412
+
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Answer: I changed the standard deviation of proposal to be \(2\),
+burn-in to be \(10000\), niterations to be \(2000\). the chain has not
+converged: each variables "jump" between two modes. The 95\% percentile
+can be read off from the summary (from 2.5\% to 97.5\% percentile):
+
+\begin{verbatim}
+      2.5%        97.5%
+var1 -2.7284  -2.4527
+var2  0.8680   1.6409
+var3 -0.5860   0.4567
+var4 -2.0684  -1.3998
+var5  0.9706    1.9400
+var6 -2.0016  -0.4412
+\end{verbatim}
+
+    \subsection{4.3.1}\label{section}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}49}]:} iterations \PY{o}{=} \PY{l+m}{1e+04}
+         burn\PYZus{}in \PY{o}{=} iterations\PY{o}{/}\PY{l+m}{2}
+         mc\PYZus{}out0 \PY{o}{=} mcmc\PYZus{}rw\PY{p}{(}iterations \PY{o}{=} iterations\PY{p}{,} burn\PYZus{}in \PY{o}{=} burn\PYZus{}in\PY{p}{)}
+         mc\PYZus{}vis\PY{p}{(}mc\PYZus{}out0\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    
+    \begin{verbatim}
+
+Iterations = 5000:10000
+Thinning interval = 1 
+Number of chains = 1 
+Sample size per chain = 5001 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+        Mean     SD Naive SE Time-series SE
+[1,] -2.1735 0.8665  0.01225         0.1881
+[2,]  2.5901 0.7637  0.01080         0.1207
+[3,]  0.3263 0.7653  0.01082         0.1893
+[4,] -0.8651 0.8347  0.01180         0.1628
+[5,]  2.1261 0.7744  0.01095         0.1444
+[6,] -0.1356 0.7541  0.01066         0.1591
+
+2. Quantiles for each variable:
+
+        2.5%     25%     50%     75%   97.5%
+var1 -3.8234 -2.7896 -2.3372 -1.5271 -0.5460
+var2  0.8094  2.1108  2.5966  3.1966  3.8961
+var3 -1.4340 -0.1942  0.4413  0.8192  1.7070
+var4 -2.4861 -1.4550 -0.8862 -0.3877  0.8658
+var5  0.5855  1.6827  2.1171  2.6866  3.4059
+var6 -1.7720 -0.6255 -0.1381  0.4098  1.3695
+
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Answer: It is supposed to be more efficient, as the acceptance rate
+should be close to 0.5 for small d, whereas in independence sampler, we
+see that acceptance rate is high (it stays the same for many iterations
+before it takes a big "jump")
+
+    \subsection{4.3.2}\label{section}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} raf \PY{o}{=} raftery.diag\PY{p}{(}mc\PYZus{}out0\PY{p}{,}q \PY{o}{=} \PY{l+m}{0.025}\PY{p}{)}
+         N \PY{o}{=} \PY{k+kp}{max}\PY{p}{(}raf\PY{o}{\PYZdl{}}resmatrix\PY{p}{[}\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{N\PYZdq{}}\PY{p}{]}\PY{p}{)} \PY{c+c1}{\PYZsh{}\PYZsh{} use the largest N suggested by raftery}
+         \PY{c+c1}{\PYZsh{}mc\PYZus{}out = mcmc\PYZus{}rw(iterations = N, burn\PYZus{}in = N/2)}
+         \PY{c+c1}{\PYZsh{}saveRDS(mc\PYZus{}out, paste0(\PYZdq{}mc\PYZus{}p3\PYZus{}iter\PYZdq{},N, \PYZdq{}.mc\PYZdq{}))}
+         mc\PYZus{}out \PY{o}{=} \PY{k+kp}{readRDS}\PY{p}{(}\PY{k+kp}{paste0}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{mc\PYZus{}p3\PYZus{}iter\PYZdq{}}\PY{p}{,}N\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{.mc\PYZdq{}}\PY{p}{)}\PY{p}{)}
+         mc\PYZus{}vis\PY{p}{(}mc\PYZus{}out\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    
+    \begin{verbatim}
+
+Iterations = 336193:672387
+Thinning interval = 1 
+Number of chains = 1 
+Sample size per chain = 336195 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+          Mean     SD Naive SE Time-series SE
+[1,] -2.452878 0.9570 0.001651        0.03547
+[2,]  2.259840 0.9428 0.001626        0.03390
+[3,]  0.006828 0.8970 0.001547        0.03607
+[4,] -1.135750 0.9020 0.001556        0.03611
+[5,]  1.800781 0.9300 0.001604        0.03503
+[6,] -0.417216 0.8730 0.001506        0.03708
+
+2. Quantiles for each variable:
+
+         2.5%     25%      50%     75%   97.5%
+var1 -4.34101 -3.0966 -2.44399 -1.8056 -0.5833
+var2  0.43673  1.6224  2.25308  2.8995  4.1306
+var3 -1.75182 -0.5974  0.01246  0.6204  1.7598
+var4 -2.89419 -1.7387 -1.13519 -0.5297  0.6381
+var5 -0.01126  1.1600  1.80146  2.4239  3.6327
+var6 -2.09966 -1.0094 -0.42186  0.1810  1.2803
+
+    \end{verbatim}
+
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{4.3.3}\label{section}
+
+\begin{itemize}
+\item
+  I plot the sample path above (the Trace of var\%d)
+\item
+  We can read off the the 95\% posterior from the summary above.
+\end{itemize}
+
+\begin{verbatim}
+      2.5%        97.5%
+var1 -4.34101  -0.5833
+var2  0.43673    4.1306
+var3 -1.75182   1.7598
+var4 -2.89419   0.6381
+var5 -0.01126   3.6327
+var6 -2.09966   1.2803
+
+\end{verbatim}
+
+    \subsection{4.3.4}\label{section}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}59}]:} geweke.diag\PY{p}{(}mc\PYZus{}out\PY{p}{,} frac1 \PY{o}{=} \PY{l+m}{0.3}\PY{p}{,} frac2 \PY{o}{=} \PY{l+m}{0.3}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+
+Fraction in 1st window = 0.3
+Fraction in 2nd window = 0.3 
+
+   var1    var2    var3    var4    var5    var6 
+-1.0698 -0.6877 -0.7329 -0.8712 -0.5352 -0.7589 
+
+    \end{verbatim}
+
+    
+    Answer: The difference between the mean of the first 30\% and that of
+the last 30\% are quite big (especially var1).
+
+    \subsection{4.3.5}\label{section}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}83}]:} \PY{k+kp}{set.seed}\PY{p}{(}\PY{l+m}{12345}\PY{p}{)}
+         k \PY{o}{=} \PY{l+m}{6} \PY{c+c1}{\PYZsh{}\PYZsh{} number of variables}
+         n\PYZus{}exper \PY{o}{=} \PY{l+m}{10}
+         m \PY{o}{=} N \PY{c+c1}{\PYZsh{}\PYZsh{} niter}
+         starts \PY{o}{=} \PY{k+kt}{matrix}\PY{p}{(}runif\PY{p}{(}k\PY{o}{*}n\PYZus{}exper\PY{p}{,} \PY{l+m}{0}\PY{p}{,} \PY{l+m}{1}\PY{p}{)}\PY{p}{,} nrow \PY{o}{=} k\PY{p}{)}
+         chains \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{p}{)}
+         \PY{k+kr}{for}\PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}k\PY{p}{)}\PY{p}{\PYZob{}}
+             out \PY{o}{\PYZlt{}\PYZhy{}} mcmc\PYZus{}rw\PY{p}{(}iterations \PY{o}{=} m\PY{p}{,} burn\PYZus{}in \PY{o}{=} m\PY{o}{/}\PY{l+m}{2}\PY{p}{,} skill \PY{o}{=} starts\PY{p}{[}\PY{p}{,}i\PY{p}{]}\PY{p}{)}
+             chains\PY{p}{[[}i\PY{p}{]]} \PY{o}{\PYZlt{}\PYZhy{}} out
+         \PY{p}{\PYZcb{}}
+         \PY{k+kp}{saveRDS}\PY{p}{(}chains\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{chains.mc\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}84}]:} gelman.diag\PY{p}{(}mcmc.list\PY{p}{(}chains\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+Potential scale reduction factors:
+
+     Point est. Upper C.I.
+[1,]          1          1
+[2,]          1          1
+[3,]          1          1
+[4,]          1          1
+[5,]          1          1
+[6,]          1          1
+
+Multivariate psrf
+
+1
+    \end{verbatim}
+
+    
+    Answer: from Gelman diagnosis, the convergence is quite good.
+
+    \section{Exercise 4.4}\label{exercise-4.4}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k+kp}{rm}\PY{p}{(}\PY{k+kt}{list} \PY{o}{=} \PY{k+kp}{ls}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{k+kn}{source}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{mcmc\PYZus{}cor.R\PYZdq{}}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZsh{} get data}
+        N \PY{o}{=} \PY{l+m}{1000}
+        X \PY{o}{=} rnorm\PY{p}{(}N\PY{p}{,} \PY{l+m}{0}\PY{p}{,} \PY{l+m}{1}\PY{p}{)}
+        Y \PY{o}{=} rnorm\PY{p}{(}N\PY{p}{,} \PY{l+m}{0}\PY{p}{,} \PY{l+m}{1}\PY{p}{)}
+        data \PY{o}{=} \PY{k+kp}{cbind}\PY{p}{(}X\PY{p}{,}Y\PY{p}{)}
+        
+        burn\PYZus{}in \PY{o}{=} \PY{l+m}{10000}
+        iterations \PY{o}{=} \PY{l+m}{100} \PY{o}{+} burn\PYZus{}in
+        \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{}I run mcmc and save result and model below}
+        start \PY{o}{=} \PY{k+kp}{proc.time}\PY{p}{(}\PY{p}{)}
+        mc\PYZus{}out \PY{o}{=} mcmc\PYZus{}cor\PY{p}{(}data\PY{p}{,} iterations\PY{p}{,}burn\PYZus{}in \PY{o}{=} \PY{l+m}{0} \PY{p}{,} rho \PY{o}{=} \PY{l+m}{0.1}\PY{p}{,} thinning\PY{o}{=} \PY{l+m}{1}\PY{p}{,} size \PY{o}{=} \PY{l+m}{0.1}\PY{p}{)}
+        runtime \PY{o}{=} \PY{k+kp}{proc.time}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} start
+        \PY{k+kp}{print}\PY{p}{(}\PY{k+kp}{paste0}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{runtime: \PYZdq{}}\PY{p}{,} runtime\PY{p}{[[}\PY{l+m}{3}\PY{p}{]]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[1] "runtime: 0.561999999999898"
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} running \PY{o}{=} running\PYZus{}var\PYZus{}mean\PY{p}{(}mc\PYZus{}out\PY{p}{)}
+        plot\PY{p}{(}running\PY{o}{\PYZdl{}}var\PY{p}{,} xlab \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{niters\PYZdq{}}\PY{p}{,} ylab \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{running variance\PYZdq{}}\PY{p}{,} main \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{niter VS running variance\PYZdq{}}\PY{p}{)}
+        plot\PY{p}{(}running\PY{o}{\PYZdl{}}\PY{k+kp}{mean}\PY{p}{,} xlab \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{niters\PYZdq{}}\PY{p}{,} ylab \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{running mean\PYZdq{}}\PY{p}{,} main \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{niter VS running mean\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Answer: The running mean converges to around \texttt{0.001} and variance
+converges to be slightly higher than \texttt{0.001}. Probably they are
+close to the mean and variance of the posterior.
+
+    \section{Appendix}\label{appendix}
+
+    \subsection{code for part 4.2, 4.3}\label{code-for-part-4.2-4.3}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{}\PYZsh{} mcmc importance sampling (adapted from Daniel\PYZsq{}s code)}
+        mcmc\PYZus{}is \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kr}{function}\PY{p}{(}iterations\PY{p}{,}burn\PYZus{}in\PY{p}{,}sd \PY{o}{=} \PY{l+m}{10}\PY{p}{,} skill \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{0}\PY{p}{)}\PY{p}{,} thinning\PY{o}{=} \PY{l+m}{1}\PY{p}{)}\PY{p}{\PYZob{}}
+            \PY{k+kp}{set.seed}\PY{p}{(}\PY{l+m}{12345}\PY{p}{)}
+            teams\PY{o}{=}\PY{k+kp}{as.matrix}\PY{p}{(}read.table\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{teams.txt\PYZdq{}}\PY{p}{)}\PY{p}{)}
+            outcomes\PY{o}{=}read.table\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{outcomes.txt\PYZdq{}}\PY{p}{)}
+            g\PY{o}{\PYZlt{}\PYZhy{}}\PY{k+kr}{function}\PY{p}{(}x\PY{p}{)} \PY{p}{\PYZob{}} \PY{l+m}{1}\PY{o}{/}\PY{p}{(}\PY{l+m}{1}\PY{o}{+}\PY{k+kp}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}x\PY{p}{)}\PY{p}{)} \PY{p}{\PYZcb{}}
+        
+            \PY{k+kc}{pi}\PY{o}{\PYZlt{}\PYZhy{}}\PY{k+kr}{function}\PY{p}{(}skill\PY{p}{)} \PY{p}{\PYZob{}}  \PY{c+c1}{\PYZsh{}Calculate the prior*likelihood, up to a constant.}
+              x\PY{o}{=}\PY{k+kp}{rowSums}\PY{p}{(}teams \PY{o}{\PYZpc{}*\PYZpc{}} skill\PY{p}{)}  \PY{c+c1}{\PYZsh{}Calculate the parameter to the function g.}
+              \PY{k+kp}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{k+kp}{sum}\PY{p}{(}skill\PY{o}{*}\PY{o}{*}\PY{l+m}{2}\PY{p}{)}\PY{o}{/}\PY{l+m}{8}\PY{p}{)}\PY{o}{*}\PY{k+kp}{prod}\PY{p}{(}\PY{k+kp}{ifelse}\PY{p}{(}outcomes\PY{o}{==}\PY{l+m}{1}\PY{p}{,}g\PY{p}{(}x\PY{p}{)}\PY{p}{,}\PY{l+m}{1}\PY{o}{\PYZhy{}}g\PY{p}{(}x\PY{p}{)}\PY{p}{)}\PY{p}{)}
+            \PY{p}{\PYZcb{}}
+        
+            n0\PY{o}{=}\PY{k+kp}{max}\PY{p}{(}burn\PYZus{}in \PY{o}{\PYZpc{}/\PYZpc{}} thinning\PY{p}{,}\PY{l+m}{1}\PY{p}{)}
+            n1\PY{o}{=}iterations \PY{o}{\PYZpc{}/\PYZpc{}} thinning
+            mc\PYZus{}output\PY{o}{=}\PY{k+kt}{matrix}\PY{p}{(}nrow\PY{o}{=}n1\PY{o}{\PYZhy{}}n0\PY{l+m}{+1}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{6}\PY{p}{)}       \PY{c+c1}{\PYZsh{}Make space for the output}
+        
+            \PY{k+kr}{for} \PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{0}\PY{o}{:}n1\PY{p}{)} \PY{p}{\PYZob{}}
+                \PY{k+kr}{if} \PY{p}{(}i\PY{o}{\PYZgt{}=}n0\PY{p}{)} mc\PYZus{}output\PY{p}{[}i\PY{o}{\PYZhy{}}n0\PY{l+m}{+1}\PY{p}{,}\PY{p}{]}\PY{o}{=}skill
+                \PY{k+kr}{for} \PY{p}{(}j \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}thinning\PY{p}{)} \PY{p}{\PYZob{}}
+                    skill\PYZus{}\PY{o}{=}rnorm\PY{p}{(}\PY{l+m}{6}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}sd\PY{p}{)}
+                    alpha\PY{o}{=}\PY{k+kp}{min}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{k+kc}{pi}\PY{p}{(}skill\PYZus{}\PY{p}{)}\PY{o}{/}\PY{k+kc}{pi}\PY{p}{(}skill\PY{p}{)}\PY{o}{*}\PY{k+kp}{exp}\PY{p}{(}\PY{k+kp}{sum}\PY{p}{(}skill\PYZus{}\PY{o}{*}\PY{o}{*}\PY{l+m}{2}\PY{o}{\PYZhy{}}skill\PY{o}{*}\PY{o}{*}\PY{l+m}{2}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{l+m}{2}\PY{o}{*}sd\PY{o}{*}\PY{o}{*}\PY{l+m}{2}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                    \PY{k+kr}{if} \PY{p}{(} runif\PY{p}{(}\PY{l+m}{1}\PY{p}{)} \PY{o}{\PYZlt{}} alpha \PY{p}{)} skill\PY{o}{=}skill\PYZus{}\PY{p}{\PYZcb{}}\PY{p}{\PYZcb{}}
+            x\PY{o}{\PYZlt{}\PYZhy{}}mcmc\PY{p}{(}mc\PYZus{}output\PY{p}{,}start\PY{o}{=}n0\PY{o}{*}thinning\PY{p}{,}thin\PY{o}{=}thinning\PY{p}{)}
+            \PY{k+kr}{return}\PY{p}{(}x\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+        
+        \PY{c+c1}{\PYZsh{}\PYZsh{} mcmc random walk}
+        mcmc\PYZus{}rw \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kr}{function}\PY{p}{(}iterations\PY{p}{,}burn\PYZus{}in\PY{p}{,}skill \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{0}\PY{p}{)}\PY{p}{,} thinning\PY{o}{=} \PY{l+m}{1}\PY{p}{)}\PY{p}{\PYZob{}}
+            \PY{k+kp}{set.seed}\PY{p}{(}\PY{l+m}{12345}\PY{p}{)}
+            teams\PY{o}{=}\PY{k+kp}{as.matrix}\PY{p}{(}read.table\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{teams.txt\PYZdq{}}\PY{p}{)}\PY{p}{)}
+            outcomes\PY{o}{=}read.table\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{outcomes.txt\PYZdq{}}\PY{p}{)}
+            g\PY{o}{\PYZlt{}\PYZhy{}}\PY{k+kr}{function}\PY{p}{(}x\PY{p}{)} \PY{p}{\PYZob{}} \PY{l+m}{1}\PY{o}{/}\PY{p}{(}\PY{l+m}{1}\PY{o}{+}\PY{k+kp}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}x\PY{p}{)}\PY{p}{)} \PY{p}{\PYZcb{}}
+        
+            \PY{k+kc}{pi}\PY{o}{\PYZlt{}\PYZhy{}}\PY{k+kr}{function}\PY{p}{(}skill\PY{p}{)} \PY{p}{\PYZob{}}  \PY{c+c1}{\PYZsh{}Calculate the prior*likelihood, up to a constant.}
+              x\PY{o}{=}\PY{k+kp}{rowSums}\PY{p}{(}teams \PY{o}{\PYZpc{}*\PYZpc{}} skill\PY{p}{)}  \PY{c+c1}{\PYZsh{}Calculate the parameter to the function g.}
+              \PY{k+kp}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{k+kp}{sum}\PY{p}{(}skill\PY{o}{*}\PY{o}{*}\PY{l+m}{2}\PY{p}{)}\PY{o}{/}\PY{l+m}{8}\PY{p}{)}\PY{o}{*}\PY{k+kp}{prod}\PY{p}{(}\PY{k+kp}{ifelse}\PY{p}{(}outcomes\PY{o}{==}\PY{l+m}{1}\PY{p}{,}g\PY{p}{(}x\PY{p}{)}\PY{p}{,}\PY{l+m}{1}\PY{o}{\PYZhy{}}g\PY{p}{(}x\PY{p}{)}\PY{p}{)}\PY{p}{)}
+            \PY{p}{\PYZcb{}}
+        
+            n0\PY{o}{=}\PY{k+kp}{max}\PY{p}{(}burn\PYZus{}in \PY{o}{\PYZpc{}/\PYZpc{}} thinning\PY{p}{,}\PY{l+m}{1}\PY{p}{)}
+            n1\PY{o}{=}iterations \PY{o}{\PYZpc{}/\PYZpc{}} thinning
+            mc\PYZus{}output\PY{o}{=}\PY{k+kt}{matrix}\PY{p}{(}nrow\PY{o}{=}n1\PY{o}{\PYZhy{}}n0\PY{l+m}{+1}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{6}\PY{p}{)}       \PY{c+c1}{\PYZsh{}Make space for the output}
+        
+            \PY{k+kr}{for} \PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{0}\PY{o}{:}n1\PY{p}{)} \PY{p}{\PYZob{}}
+            \PY{k+kr}{if} \PY{p}{(}i\PY{o}{\PYZgt{}=}n0\PY{p}{)} mc\PYZus{}output\PY{p}{[}i\PY{o}{\PYZhy{}}n0\PY{l+m}{+1}\PY{p}{,}\PY{p}{]}\PY{o}{=}skill
+            \PY{k+kr}{for} \PY{p}{(}j \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}thinning\PY{p}{)} \PY{p}{\PYZob{}}
+                idx \PY{o}{=} \PY{k+kp}{sample}\PY{p}{(}\PY{l+m}{1}\PY{o}{:}\PY{l+m}{6}\PY{p}{,}\PY{l+m}{1}\PY{p}{)}
+                skill\PYZus{}\PY{o}{=} skill
+                skill\PYZus{}\PY{p}{[}idx\PY{p}{]} \PY{o}{=} skill\PYZus{}\PY{p}{[}idx\PY{p}{]} \PY{o}{+} rnorm\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{0}\PY{p}{,}\PY{l+m}{1}\PY{p}{)}  
+        
+                \PY{c+c1}{\PYZsh{}alpha=min(1,pi(skill\PYZus{})/pi(skill))}
+                alpha\PY{o}{=}\PY{k+kp}{min}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{k+kc}{pi}\PY{p}{(}skill\PYZus{}\PY{p}{)}\PY{o}{/}\PY{k+kc}{pi}\PY{p}{(}skill\PY{p}{)}\PY{p}{)}
+                \PY{k+kr}{if} \PY{p}{(} runif\PY{p}{(}\PY{l+m}{1}\PY{p}{)} \PY{o}{\PYZlt{}} alpha \PY{p}{)} skill\PY{o}{=}skill\PYZus{}\PY{p}{\PYZcb{}}\PY{p}{\PYZcb{}}
+            x\PY{o}{\PYZlt{}\PYZhy{}}mcmc\PY{p}{(}mc\PYZus{}output\PY{p}{,}start\PY{o}{=}n0\PY{o}{*}thinning\PY{p}{,}thin\PY{o}{=}thinning\PY{p}{)}
+            \PY{k+kr}{return}\PY{p}{(}x\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+        
+        \PY{c+c1}{\PYZsh{}\PYZsh{} visualize mcmc chain}
+        mc\PYZus{}vis \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kr}{function}\PY{p}{(}x\PY{p}{)}\PY{p}{\PYZob{}}
+            plot\PY{p}{(}x\PY{p}{)}
+            \PY{k+kp}{summary}\PY{p}{(}x\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    \subsection{code for part 4.4}\label{code-for-part-4.4}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{}\PYZsh{} mcmc random walk for estimating correlation in problem 4.4}
+        mcmc\PYZus{}cor \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kr}{function}\PY{p}{(}data\PY{p}{,} iterations\PY{p}{,}burn\PYZus{}in\PY{p}{,} rho \PY{o}{=} \PY{l+m}{0.1}\PY{p}{,} thinning\PY{o}{=} \PY{l+m}{1}\PY{p}{,} size \PY{o}{=} \PY{l+m}{0.1}\PY{p}{)}\PY{p}{\PYZob{}}
+            \PY{k+kp}{set.seed}\PY{p}{(}\PY{l+m}{12345}\PY{p}{)}
+        
+            ll \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kr}{function}\PY{p}{(}rho\PY{p}{,} data\PY{p}{)}\PY{p}{\PYZob{}} \PY{c+c1}{\PYZsh{}\PYZsh{} compute loglikelihood of data given rho}
+                N \PY{o}{=} \PY{k+kp}{nrow}\PY{p}{(}data\PY{p}{)}
+                \PY{c+c1}{\PYZsh{}lls \PYZlt{}\PYZhy{} apply(data, 1, ll\PYZus{}helper, rho)}
+                X \PY{o}{=} data\PY{p}{[}\PY{p}{,}\PY{l+m}{1}\PY{p}{]}
+                Y \PY{o}{=} data\PY{p}{[}\PY{p}{,}\PY{l+m}{2}\PY{p}{]}
+                lls \PY{o}{=} X\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{+} Y\PY{o}{\PYZca{}}\PY{l+m}{2} \PY{o}{\PYZhy{}} \PY{l+m}{2}\PY{o}{*}rho\PY{o}{*}X\PY{o}{*}Y
+                ll \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+m}{\PYZhy{}1}\PY{o}{/}\PY{p}{(}\PY{l+m}{2}\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}rho\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{k+kp}{sum}\PY{p}{(}lls\PY{p}{)} \PY{o}{\PYZhy{}} N \PY{o}{*} \PY{k+kp}{log}\PY{p}{(}\PY{l+m}{2}\PY{o}{*}\PY{k+kc}{pi}\PY{o}{*}\PY{k+kp}{sqrt}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}rho\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}\PY{p}{)}
+                \PY{k+kr}{return}\PY{p}{(}ll\PY{p}{)}
+            \PY{p}{\PYZcb{}}
+        
+            prior \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kr}{function}\PY{p}{(}rho\PY{p}{)}\PY{p}{\PYZob{}}
+                \PY{k+kr}{return}\PY{p}{(}\PY{l+m}{1}\PY{o}{/}\PY{p}{(}\PY{k+kc}{pi}\PY{o}{*}\PY{p}{(}\PY{l+m}{1}\PY{o}{\PYZhy{}}rho\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{p}{)}\PY{o}{\PYZca{}}\PY{p}{(}\PY{l+m}{1}\PY{o}{/}\PY{l+m}{2}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+            \PY{p}{\PYZcb{}}
+        
+            target\PYZus{}ratio \PY{o}{\PYZlt{}\PYZhy{}}\PY{k+kr}{function}\PY{p}{(}rho\PYZus{}\PY{p}{,} rho\PY{p}{,} data\PY{p}{)} \PY{p}{\PYZob{}}  \PY{c+c1}{\PYZsh{} compute ratio of target posterior(rho\PYZus{})/posterior(rho)}
+                ll \PY{o}{=} ll\PY{p}{(}rho\PY{p}{,} data\PY{p}{)}
+                ll\PYZus{} \PY{o}{=} ll\PY{p}{(}rho\PYZus{}\PY{p}{,} data\PY{p}{)}
+                ratio \PY{o}{=} \PY{k+kp}{exp}\PY{p}{(}ll\PYZus{} \PY{o}{\PYZhy{}} ll\PY{p}{)} \PY{o}{*} prior\PY{p}{(}rho\PYZus{}\PY{p}{)}\PY{o}{/}prior\PY{p}{(}rho\PY{p}{)}
+                \PY{k+kr}{return}\PY{p}{(}ratio\PY{p}{)}
+            \PY{p}{\PYZcb{}}
+        
+            accept \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kr}{function}\PY{p}{(}rho\PYZus{}\PY{p}{,} rho\PY{p}{,} data\PY{p}{)}\PY{p}{\PYZob{}} \PY{c+c1}{\PYZsh{}\PYZsh{} compute the acceptance probability}
+                \PY{k+kr}{return}\PY{p}{(}\PY{k+kp}{min}\PY{p}{(}\PY{l+m}{1}\PY{p}{,} target\PYZus{}ratio\PY{p}{(}rho\PYZus{}\PY{p}{,} rho\PY{p}{,} data\PY{p}{)}\PY{p}{)}\PY{p}{)}
+            \PY{p}{\PYZcb{}}
+        
+            rw\PYZus{}sampler \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kr}{function}\PY{p}{(}rho\PY{p}{,} size\PY{p}{)}\PY{p}{\PYZob{}} \PY{c+c1}{\PYZsh{}\PYZsh{} get new rho\PYZus{} from old rho}
+                \PY{k+kr}{return}\PY{p}{(}runif\PY{p}{(}\PY{l+m}{1}\PY{p}{,} rho\PY{o}{\PYZhy{}}size\PY{p}{,} rho\PY{o}{+}size\PY{p}{)}\PY{p}{)}
+            \PY{p}{\PYZcb{}}
+        
+            \PY{c+c1}{\PYZsh{}\PYZsh{} computation}
+        
+            n0\PY{o}{=}\PY{k+kp}{max}\PY{p}{(}burn\PYZus{}in \PY{o}{\PYZpc{}/\PYZpc{}} thinning\PY{p}{,}\PY{l+m}{1}\PY{p}{)}
+            n1\PY{o}{=}iterations \PY{o}{\PYZpc{}/\PYZpc{}} thinning
+            mc\PYZus{}output\PY{o}{=}\PY{k+kt}{matrix}\PY{p}{(}nrow\PY{o}{=}n1\PY{o}{\PYZhy{}}n0\PY{l+m}{+1}\PY{p}{,}ncol\PY{o}{=}\PY{l+m}{1}\PY{p}{)}       \PY{c+c1}{\PYZsh{}Make space for the output}
+        
+            \PY{k+kr}{for} \PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{0}\PY{o}{:}n1\PY{p}{)} \PY{p}{\PYZob{}}
+                \PY{k+kr}{if} \PY{p}{(}i\PY{o}{\PYZgt{}=}n0\PY{p}{)} mc\PYZus{}output\PY{p}{[}i\PY{o}{\PYZhy{}}n0\PY{l+m}{+1}\PY{p}{,}\PY{p}{]}\PY{o}{=}rho
+                \PY{k+kr}{for} \PY{p}{(}j \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}thinning\PY{p}{)} \PY{p}{\PYZob{}}
+                    rho\PYZus{} \PY{o}{=} rw\PYZus{}sampler\PY{p}{(}rho\PY{p}{,} size\PY{p}{)}
+                    alpha\PY{o}{=} accept\PY{p}{(}rho\PYZus{}\PY{p}{,} rho\PY{p}{,} data\PY{p}{)}
+                    \PY{k+kr}{if} \PY{p}{(} runif\PY{p}{(}\PY{l+m}{1}\PY{p}{)} \PY{o}{\PYZlt{}} alpha \PY{p}{)} rho\PY{o}{=}rho\PYZus{}\PY{p}{\PYZcb{}}\PY{p}{\PYZcb{}}
+            x\PY{o}{\PYZlt{}\PYZhy{}}mcmc\PY{p}{(}mc\PYZus{}output\PY{p}{,}start\PY{o}{=}n0\PY{o}{*}thinning\PY{p}{,}thin\PY{o}{=}thinning\PY{p}{)}
+            \PY{k+kr}{return}\PY{p}{(}x\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+        
+        \PY{c+c1}{\PYZsh{}\PYZsh{} compute running variance an d running mean}
+        running\PYZus{}var\PYZus{}mean \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kr}{function}\PY{p}{(}mc\PYZus{}out\PY{p}{)}\PY{p}{\PYZob{}}
+          var\PYZus{}running \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{p}{)}
+          mean\PYZus{}running \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{p}{)}
+          \PY{k+kr}{for}\PY{p}{(}i \PY{k+kr}{in} \PY{l+m}{1}\PY{o}{:}\PY{k+kp}{length}\PY{p}{(}mc\PYZus{}out\PY{p}{)}\PY{p}{)}\PY{p}{\PYZob{}}
+            var\PYZus{}running \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}var\PYZus{}running\PY{p}{,} var\PY{p}{(}mc\PYZus{}out\PY{p}{[}\PY{l+m}{1}\PY{o}{:}i\PY{p}{]}\PY{p}{)}\PY{p}{)}
+            mean\PYZus{}running \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}var\PYZus{}running\PY{p}{,} \PY{k+kp}{mean}\PY{p}{(}mc\PYZus{}out\PY{p}{[}\PY{l+m}{1}\PY{o}{:}i\PY{p}{]}\PY{p}{)}\PY{p}{)}
+          \PY{p}{\PYZcb{}}
+          \PY{k+kr}{return}\PY{p}{(}\PY{k+kt}{list}\PY{p}{(}var \PY{o}{=} var\PYZus{}running\PY{p}{,} mean \PY{o}{=} mean\PYZus{}running\PY{p}{)}\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
