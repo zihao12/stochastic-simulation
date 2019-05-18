@@ -1,0 +1,63 @@
+---
+title: "hw3"
+author: "ZIHAO WANG"
+date: "5/17/2019"
+output: pdf_document
+---
+
+# exercise 5.3
+
+## 3
+```{r}
+source("gibbs.R")
+Theta = matrix(c(0, 0.5, 0, 0.5, 0, 
+                 0.5, 0, 0.5, 0, 0.5,
+                 0, 0.5, 0, 0.5, 0, 
+                 0.5, 0, 0.5, 0, 0,
+                 0, 0.5, 0, 0, 0), nrow = 5)
+burn_in = 5000
+N = 1000
+start = proc.time()
+out = gibbs_graphical(Theta, niter = N + burn_in)
+cat(sprintf("runtime %s\n", (proc.time() - start)[[3]]))
+samples = out[(burn_in + 1): nrow(out),]
+sample_means = colMeans(samples)
+sample_var = apply(samples, 2, var)
+for(i in 1:nrow(Theta)){
+  cat(sprintf("------ var %d ------\n", i))
+  cat(sprintf("sample mean: %f\n",sample_means[i]))
+  cat(sprintf("sample var : %f\n",sample_var[i]))
+}
+cat(sprintf("------ ------- ------\n"))
+cat(sprintf("------ correlation matrix ------\n"))
+print(cor(samples))
+p = heatmap(cor(samples))
+print(p)
+```
+
+
+## 4 reverse engineer $\Theta$
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
